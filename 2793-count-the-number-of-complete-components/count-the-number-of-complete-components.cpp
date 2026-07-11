@@ -7,7 +7,7 @@ public:
     void dfs(int u){
         vis[u]=1;
         node+=1;
-        degreesum+=adj[u].size();//
+        degreesum+=adj[u].size();//component
         for(int v:adj[u]){
             if(!vis[v]){
                 dfs(v);
