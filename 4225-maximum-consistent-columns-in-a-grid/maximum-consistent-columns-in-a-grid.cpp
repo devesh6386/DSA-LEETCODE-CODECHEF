@@ -1,26 +1,29 @@
 class Solution {
 public:
     int maxConsistentColumns(vector<vector<int>>& grid, int limit) {
-        int m=grid.size();
         int n=grid[0].size();
-        vector<int>dp(n,1);//column length initailyy1
-        for(int c=0;c<n;c++){
-            for(int j=c-1;j>=0;j--){
-                if(dp[j]+1>dp[c]){//till previous col compare
-                    bool good=true;
-                    for(auto &r:grid){
-                        if(abs(r[c]-r[j])>limit){
-                            good=false;
-                            break;
-                        }
-                    }
-                    if(good){
-                        dp[c]=dp[j]+1;
+        int m=grid.size();
+        int ans=1;
+        vector<int>dp(n,1);
+        for(int i=1;i<n;i++){
+            
+            for(int j=0;j<i;j++){//previou columns
+                bool good=true;
+                for(int k=0;k<m;k++){
+                    if(abs(grid[k][i]-grid[k][j])>limit){
+                        good=false;
+                        break;
                     }
                 }
+                if(good){
+                    dp[i]=max(dp[i],dp[j]+1);
+                }
             }
+            ans=max(ans,dp[i]);
+            
         }
-        return *max_element(dp.begin(),dp.end());
+        return ans;
     }
 };
-        
+
+
