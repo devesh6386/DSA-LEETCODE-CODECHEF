@@ -1,29 +1,33 @@
 class Solution {
 public:
     int maxActiveSectionsAfterTrade(string s) {
+        int totalones=0;
+        int cnt1=0;//previous zeroblock
+        int cnt2=0;//curr zeroblock
+        int ans=0;//00--11
+        int i=0;
         int n=s.length();
-        int ones=0;
-        for(char c:s){
-            if(c=='1'){
-                ones++;//original
-            }
-        }
-        string t="1"+s+"1";//augmented
-        vector<pair<char,int>>runs;//split
-        for(char c:t){
-            if(runs.empty()|| runs.back().first!=c){
-                runs.push_back({c,1});
+        while(i<n){
+            if(s[i]=='0'){
+                cnt1++;
+                i++;
             }
             else{
-                runs.back().second++;//cnt
+                while(i<n && s[i]=='1'){
+                    totalones++;
+                    i++;
+                }
+                while(i<n && s[i]=='0'){
+                    cnt2++;
+                    i++;
+                }
+                if(cnt1 && cnt2){
+                    ans=max(ans,cnt1+cnt2);
+                }
+                cnt1=cnt2;
+                cnt2=0;
             }
         }
-        int ans=0;
-        for(int i=1;i+1<runs.size();i++){
-            if(runs[i].first=='1' && runs[i-1].first=='0' && runs[i+1].first=='0'){
-                ans=max(ans,runs[i-1].second+runs[i+1].second);
-            }
-        }
-        return ans+ones;
+        return ans+totalones;
     }
 };
