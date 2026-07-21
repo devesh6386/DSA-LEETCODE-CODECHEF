@@ -1,12 +1,12 @@
 class Solution {
 public:
     int maxActiveSectionsAfterTrade(string s) {
-        int totalones=0;
-        int cnt1=0;//previous zeroblock
-        int cnt2=0;//curr zeroblock
-        int ans=0;//00--11
-        int i=0;
         int n=s.length();
+        int totalone=0;
+        int cnt1=0;
+        int cnt2=0;
+        int ans=0;
+        int i=0;
         while(i<n){
             if(s[i]=='0'){
                 cnt1++;
@@ -14,7 +14,7 @@ public:
             }
             else{
                 while(i<n && s[i]=='1'){
-                    totalones++;
+                    totalone++;
                     i++;
                 }
                 while(i<n && s[i]=='0'){
@@ -28,6 +28,7 @@ public:
                 cnt2=0;
             }
         }
-        return ans+totalones;
+        return ans+totalone;
     }
 };
+          
