@@ -13,18 +13,18 @@ public:
                 cnt[g]+=freq[j];
             }
         }
-        //cnt of pairs
-        //nowhow ,any are equal to gcd
-        vector<long long>gcdPairs(mx+1);
+        vector<long long>gcdpair(mx+1);
         for(int g=mx;g>=1;g--){
-            gcdPairs[g]+=cnt[g]*(cnt[g]-1)/2;
-            for(int j=2*g;j<=mx;j+=g){//remove all greater
-                gcdPairs[g]-=gcdPairs[j];
+            gcdpair[g]+=cnt[g]*(cnt[g]-1)/2;
+            for(int j=2*g;j<=mx;j+=g){
+                gcdpair[g]-=gcdpair[j];
             }
         }
+    
         vector<long long>pref(mx+1);
+        pref[0]=0;
         for(int g=1;g<=mx;g++){
-            pref[g]=pref[g-1]+gcdPairs[g];
+            pref[g]=pref[g-1]+gcdpair[g];
         }
         vector<int>ans;
         for(long long q:queries){
@@ -35,4 +35,4 @@ public:
         return ans;
     }
 };
-      
+
