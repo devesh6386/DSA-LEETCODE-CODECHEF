@@ -2,7 +2,7 @@ class Solution {
 public:
     int minOperations(vector<int>& nums, vector<int>& numsDivide) {
         int n=nums.size();
-        sort(nums.begin(),nums.end());
+        //sort(nums.begin(),nums.end());
         priority_queue<int,vector<int>,greater<int>>pq(nums.begin(),nums.end());//min no on top;
         int target=numsDivide[0];
         for(int x:numsDivide){
