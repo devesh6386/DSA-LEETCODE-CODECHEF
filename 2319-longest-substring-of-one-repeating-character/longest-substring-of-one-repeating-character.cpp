@@ -4,25 +4,25 @@ public:
         int pre=0;
         int suf=0;
         int maxlen=0;
-        char leftChar=0;
-        char rightChar=0;
+        char leftchar=0;
+        char rightchar=0;
     };
     int n;
     vector<Node>segtree;
     Node merge(Node l,Node r,int leftlen,int rightlen){
         Node res;
-        res.leftChar=l.leftChar;
-        res.rightChar=r.rightChar;
+        res.leftchar=l.leftchar;
+        res.rightchar=r.rightchar;
         res.pre=l.pre;
-        if(l.pre==leftlen && l.rightChar==r.leftChar){
+        if(l.pre==leftlen && l.rightchar==r.leftchar){
             res.pre=l.pre+r.pre;
         }
         res.suf=r.suf;
-        if(r.suf==rightlen && l.rightChar==r.leftChar){
-            res.suf=r.suf+l.suf;
+        if(r.suf==rightlen && l.rightchar==r.leftchar){
+            res.suf=l.suf+r.suf;
         }
         res.maxlen=max(l.maxlen,r.maxlen);
-        if(l.rightChar==r.leftChar){
+        if(l.rightchar==r.leftchar){
             res.maxlen=max(res.maxlen,l.suf+r.pre);
         }
         return res;
@@ -37,11 +37,11 @@ public:
         build(2*i+2,mid+1,r,s);
         segtree[i]=merge(segtree[2*i+1],segtree[2*i+2],mid-l+1,r-mid);
     }
-     
+
     void update(int i,int l,int r,int pos,char ch){
         if(l==r){
             segtree[i]={1,1,1,ch,ch};
-            return;
+            return ;
         }
         int mid=l+(r-l)/2;
         if(pos<=mid){
@@ -54,9 +54,9 @@ public:
     }
 
     vector<int> longestRepeating(string s, string queryCharacters, vector<int>& queryIndices) {
-        int k=queryCharacters.length();
+        int k=queryIndices.size();
         n=s.size();
-        segtree.assign(4*n,Node());
+        segtree.resize(4*n,Node());
         build(0,0,n-1,s);
         vector<int>res(k);
         for(int i=0;i<k;i++){
@@ -68,4 +68,4 @@ public:
         return res;
     }
 };
-    
+        
